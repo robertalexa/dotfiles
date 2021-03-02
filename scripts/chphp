@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+
+if [ $EUID != 0 ]; then
+    sudo "$0" "$@"
+    exit $?
+fi
+
+get_help() {
+    echo "-h                  to see this message"
+    echo "-l                  to list avaliable versions"
+    echo "-i                  to see help on installing php"
+    echo "-v [7.0, 7.2, etc]  to select a php version"
+    exit 0;
+}
+
+get_install() {
+    echo "Hi,"
+    echo "You may want to add a ppa:"
+    echo "   sudo add-apt-repository ppa:ondrej/php"
+    echo "   sudo apt update"
+    echo "If your system complains about a key missing then run:"
+    echo "   sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys <key>"
+    echo "If your apache modules have not been installed then run:"
+    echo "   sudo apt install libapache2-mod-php7.2"
+    echo "   sudo apt install libapache2-mod-php7.1"
+    exit 0;
+}
+
+set_version() {
+
+    VERSIONS=$(get_php_versions)
+
+    if [[ ! "$VERSIONS" =~ "${1}" ]]; then
+        echo "version not installed"
+        exit 1;
+    fi
+
+    for VERSION in $VERSIONS
+    do
+        a2dismod "$(basename "$VERSION")" > /dev/null 2>&1
+    done
+
+    for VERSION in $VERSIONS
+    do
+        if [[ "$VERSION" == *"${1}"* ]]; then
+            echo "enabling ${VERSION}"
+            a2enmod "php${1}" > /dev/null 2>&1
+            update-alternatives --set php "${VERSION}" > /dev/null 2>&1
+        fi
+    done
+
+    echo "restarting apache..."
+    systemctl restart apache2
+    exit 0;
+}
+
+get_php_versions() {
+    update-alternatives --list php
+}
+
+while getopts ":h:v:il" o; do
+    case "${o}" in
+        h)
+            h=${OPTARG}
+                get_help
+            ;;
+        i)
+            i=${OPTARG}
+                get_install
+            ;;
+        l)
+            l=${OPTARG}
+                get_php_versions
+                exit 0
+            ;;
+        v)
+            v=${OPTARG}
+                set_version $v
+            ;;
+        *)
+            get_help
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+if [ -z "${v}" ] || [ -z "${h}" ] || [ -z "${l}" ]; then
+    get_help
+fi
+
+

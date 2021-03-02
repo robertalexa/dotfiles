@@ -1,0 +1,6 @@
+[user]
+	email = mail@robertalexa.me
+	name = Robert Alexa
+[alias]
+    lo = log --all --branches --tags --remotes --decorate --graph --oneline --pretty=format:'%C(yellow)%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    subupdate = submodule foreach git pull origin master

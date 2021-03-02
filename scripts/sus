@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+SERVICES=(
+    'apache2'
+    'mysql'
+    'sshd'
+    'memcached'
+)
+
+for SERVICE in "${SERVICES[@]}"
+do
+    if [ "$(systemctl status $SERVICE 2>&1 | grep -v "not be found")" ]; then
+        echo "starting ${SERVICE}"
+        systemctl start "$SERVICE"
+    fi
+done

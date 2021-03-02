@@ -1,0 +1,25 @@
+[global_config]
+  inactive_color_offset = 1.0
+  suppress_multiple_term_dialog = True
+[keybindings]
+[profiles]
+  [[default]]
+    background_color = "#263238"
+    cursor_color = "#e92d94"
+    cursor_color_fg = False
+    font = MesloLGS NF 12
+    foreground_color = "#b0bec5"
+    show_titlebar = False
+    scrollbar_position = hidden
+    palette = "#263238:#ff5370:#c3e88d:#ffcb6b:#82aaff:#c792ea:#89ddff:#c0c5ce:#65737e:#e53935:#91b859:#ffb62c:#6182b8:#7c4dff:#39adb5:#eff1f5"
+    use_system_font = False
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+      profile = default
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
