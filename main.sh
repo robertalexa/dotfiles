@@ -56,7 +56,8 @@ done
 if [ "$INSTALL_PROGRAMS" ]; then
     say "installing apt programs"
     sudo apt install curl git zsh vim terminator \
-        gnome-shell-extensions gnome-tweak-tool chrome-gnome-shell
+        gnome-shell-extensions gnome-tweak-tool \
+        chrome-gnome-shell neofetch
 
     say "installing oh-my-zsh"
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
