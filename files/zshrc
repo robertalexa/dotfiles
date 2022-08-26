@@ -9,8 +9,17 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(time)
 
-plugins=(git zsh-syntax-highlighting)
+plugins=(git zsh-syntax-highlighting docker)
 
 source $ZSH/oh-my-zsh.sh
 
 [[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export DOCKER_MYSQL_ROOT_PASSWORD=02460
+export UID=$(id -u)
+export GID=$(id -g)
+
