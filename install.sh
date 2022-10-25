@@ -7,4 +7,4 @@ fi
 
 mkdir -p ~/.misc
 git clone -q https://github.com/robertalexa/dotfiles.git ~/.misc/dotfiles
-~/.misc/dotfiles/main.sh -iptv
+~/.misc/dotfiles/main.sh -ipv
