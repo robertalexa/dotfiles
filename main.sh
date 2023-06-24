@@ -60,7 +60,8 @@ if [ "$INSTALL_PROGRAMS" ]; then
         neofetch htop
 
     say "installing oh-my-zsh"
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    # Preventing ZSH from autostarting and hijacking current terminal session after install
+    RUNZSH="no" sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
     say "installing vim-plug"
     curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -74,7 +75,9 @@ if [ "$INSTALL_PROGRAMS" ]; then
 
     say "installing meslo font"
     mkdir -p ~/.local/share/fonts/
-    cp ./fonts/*.ttf ~/.local/share/fonts/
+    # This ensures path is read and known regardless of the way of invoking script - directly or via `install.sh`
+    CURRENT_DIR=$(dirname -- "$( readlink -f -- "$0" )")
+    cp $CURRENT_DIR/fonts/*.ttf ~/.local/share/fonts/
 
     say "clearing font cache"
     fc-cache -f -v > /dev/null 2>&1
@@ -91,6 +94,15 @@ if [ "$INSTALL" ]; then
         ln -s "${PROJ_DIR}/files/${FILES[$INDEX]}" "${PATHS[$INDEX]}"
     done
 fi
+
+if [ "$INSTALL_PROGRAMS" ] && [ "$INSTALL" ]; then
+    say "installing vim plugins"
+    # `vimrc` has to be specified as it is run from shell
+    # -e -s allow to start vim fully silently
+    vim -u ~/.vimrc -e -s +PlugInstall +qall
+
+    say "restart terminal for changes to take effect"
+fi     
 
 if [ "$INSTALL_THEME" ]; then
     git clone https://github.com/robertalexa/gtk-theme-framework.git ~/.misc/gtk-theme-framework
