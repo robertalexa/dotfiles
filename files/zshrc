@@ -23,4 +23,4 @@ export DOCKER_MYSQL_ROOT_PASSWORD=""
 export UID=$(id -u)
 export GID=$(id -g)
 export PATH=$HOME/.config/composer/vendor/bin:$PATH
-export PATH=$PATH:/home/rob/.local/bin
+export PATH=$PATH:$HOME/.local/bin
