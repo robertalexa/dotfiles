@@ -60,7 +60,8 @@ if [ "$INSTALL_PROGRAMS" ]; then
         neofetch htop
 
     say "installing oh-my-zsh"
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    # Preventing ZSH from autostarting and hijacking current terminal session after install
+    RUNZSH="no" sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
     say "installing vim-plug"
     curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
