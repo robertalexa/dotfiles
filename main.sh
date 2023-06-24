@@ -75,7 +75,9 @@ if [ "$INSTALL_PROGRAMS" ]; then
 
     say "installing meslo font"
     mkdir -p ~/.local/share/fonts/
-    cp ./fonts/*.ttf ~/.local/share/fonts/
+    # This ensures path is read and known regardless of the way of invoking script - directly or via `install.sh`
+    CURRENT_DIR=$(dirname -- "$( readlink -f -- "$0" )")
+    cp $CURRENT_DIR/fonts/*.ttf ~/.local/share/fonts/
 
     say "clearing font cache"
     fc-cache -f -v > /dev/null 2>&1
