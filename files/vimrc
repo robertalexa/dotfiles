@@ -23,7 +23,16 @@ if &term =~ '256color'
 endif
 
 set background=dark
-colorscheme vim-material
+
+try
+    colorscheme vim-material
+catch /^Vim\%((\a\+)\)\=:E185/
+    " Catches E185 exception (colorscheme not found)
+    " Used `:help catch` as inspiration
+
+    " Defining a fallback when `vim-material` does not exist.
+    colorscheme default
+endtry
 
 let g:airline_theme='material'
 let g:airline_powerline_fonts = 1
