@@ -97,7 +97,7 @@ fi
 
 if [ "$INSTALL_PROGRAMS" ] && [ "$INSTALL" ]; then
     say "installing vim plugins"
-    # `vimrc`` has to be specified as it is run from shell
+    # `vimrc` has to be specified as it is run from shell
     # -e -s allow to start vim fully silently
     vim -u ~/.vimrc -e -s +PlugInstall +qall
 
