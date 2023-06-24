@@ -95,6 +95,13 @@ if [ "$INSTALL" ]; then
     done
 fi
 
+if [ "$INSTALL_PROGRAMS" ] && [ "$INSTALL" ]; then                                 
+    say "installing vim plugins"                                                   
+    vim -u ~/.vimrc +PlugInstall +qall
+
+    say "restart terminal for changes to take effect"
+fi     
+
 if [ "$INSTALL_THEME" ]; then
     git clone https://github.com/robertalexa/gtk-theme-framework.git ~/.misc/gtk-theme-framework
     ~/.misc/gtk-theme-framework/main.sh -t oceanic -iosvc
