@@ -9,3 +9,11 @@
 * `sudo mv /etc/update-motd.d/10-uname uname.bak`
 * set custom motd `/etc/update-motd.d/20-motd`
 * `sudo chmod 755 20-motd`
+* change swap size
+
+```shell
+sudo dphys-swapfile swapoff
+sudo vim /etc/dphys-swapfile
+sudo dphys-swapfile setup
+sudo dphys-swapfile swapon
+```
